@@ -10,6 +10,8 @@ const {
   validateLogin,
 } = require("../controllers/userController");
 
+const { getChatHistories, getChatDetail } = require("../controllers/chatController");
+
 const auth = require("../middleware/auth");
 const authorize = require("../middleware/authorize");
 const delay = require("../middleware/delay");
@@ -30,5 +32,18 @@ routerAPI.use(auth);
 
 routerAPI.get("/user", authorize("Admin"), getUser);
 routerAPI.get("/account", authorize(["Admin", "User"]), delay, getAccount);
+
+
+// API lịch sử chat.
+routerAPI.get(
+  "/chat-histories",
+  authorize(["Admin", "User"]), // Chỉ cho phép Admin và User truy cập
+  getChatHistories
+);
+routerAPI.get(
+  "/g/:chatHistoryId",
+  authorize(["Admin", "User"]), // Chỉ cho phép Admin và User truy cập
+  getChatDetail
+);
 
 module.exports = routerAPI;

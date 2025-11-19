@@ -53,6 +53,7 @@ const loginService = async (emaill, password) => {
         };
       } else {
         const payload = {
+          id: user.id,
           email: user.email,
           name: user.name,
           role: user.role,
